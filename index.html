@@ -58,7 +58,7 @@
         height: 100vh;
       }
 
-      /* App Layout - OCUPA 100% COMPLETO */
+      /* App Layout */
       .app {
         display: flex;
         height: 100vh;
@@ -66,7 +66,7 @@
         overflow: hidden;
       }
 
-      /* Sidebar - fija a la izquierda */
+      /* Sidebar */
       .sidebar {
         width: 320px;
         flex-shrink: 0;
@@ -195,7 +195,7 @@
         color: var(--accent-soft);
       }
 
-      /* Main Content - OCUPA EL RESTO */
+      /* Main Content */
       .main {
         flex: 1;
         display: flex;
@@ -222,7 +222,7 @@
         color: var(--text-dark);
       }
 
-      /* Slideshow - OCUPA 100% DEL MAIN */
+      /* Slideshow */
       .slideshow {
         flex: 1;
         position: relative;
@@ -270,7 +270,7 @@
         min-height: 100%;
       }
 
-      /* Hero Slide - DISEÑO EQUILIBRADO */
+      /* Hero Grid */
       .hero-grid {
         display: grid;
         grid-template-columns: 0.9fr 1.1fr;
@@ -299,7 +299,6 @@
         object-position: center 25%;
       }
 
-      /* Ajuste específico para fotos de secretarios */
       .hero-image img[src*="secretario"],
       .hero-image img[src*="secretaria"],
       .hero-image img[src*="Fotografia"],
@@ -361,7 +360,7 @@
         font-size: 1rem;
       }
 
-      /* Secretary Card - COMPACTO PARA MÁS CONTENIDO */
+      /* Secretary Card - SIN SCROLL EN DESKTOP */
       .secretary-card {
         background: var(--bg-card);
         border-radius: 24px;
@@ -408,17 +407,28 @@
         font-weight: 500;
       }
 
+      /* Descripción del secretario - SIN SCROLL en desktop */
       .secretary-description {
         line-height: 1.55;
         color: var(--text-dark);
         margin-bottom: 1rem;
         font-size: 0.85rem;
-        max-height: 120px;
-        overflow-y: auto;
       }
 
-      .secretary-description::-webkit-scrollbar {
-        width: 3px;
+      /* En desktop NO hay límite de altura ni scroll */
+      @media (min-width: 1024px) {
+        .secretary-description {
+          max-height: none;
+          overflow-y: visible;
+        }
+      }
+
+      /* En móvil SÍ puede tener scroll si es necesario */
+      @media (max-width: 768px) {
+        .secretary-description {
+          max-height: 180px;
+          overflow-y: auto;
+        }
       }
 
       .social-links {
@@ -467,13 +477,28 @@
         color: var(--accent);
       }
 
+      /* Descripción del estado - SIN SCROLL en desktop */
       .info-text p {
         line-height: 1.7;
         color: var(--text-dark);
         margin-bottom: 1.5rem;
-        max-height: 200px;
-        overflow-y: auto;
-        padding-right: 0.5rem;
+      }
+
+      /* En desktop NO hay límite de altura ni scroll */
+      @media (min-width: 1024px) {
+        .info-text p {
+          max-height: none;
+          overflow-y: visible;
+        }
+      }
+
+      /* En móvil SÍ puede tener scroll si es necesario */
+      @media (max-width: 768px) {
+        .info-text p {
+          max-height: 200px;
+          overflow-y: auto;
+          padding-right: 0.5rem;
+        }
       }
 
       .stats {
@@ -676,221 +701,6 @@
 
       /* Slide Navigation */
       .slide-nav {
-        position: absolute;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 0.5rem 1.25rem;
-        border-radius: 60px;
-        box-shadow: var(--shadow-lg);
-        z-index: 50;
-      }
-
-      .nav-btn {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        cursor: pointer;
-        transition: var(--transition);
-        font-size: 1rem;
-      }
-
-      .nav-btn:hover {
-        background: var(--accent);
-        color: white;
-        border-color: var(--accent);
-      }
-
-      .dots {
-        display: flex;
-        gap: 0.6rem;
-      }
-
-      .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--border);
-        cursor: pointer;
-        transition: var(--transition);
-      }
-
-      .dot.active {
-        width: 24px;
-        border-radius: 4px;
-        background: var(--accent);
-      }
-
-      /* Loading */
-      .loading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 3px solid var(--border);
-        border-top-color: var(--accent);
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Responsive para tablets (menos de 1024px) */
-      @media (max-width: 1024px) {
-        .hero-grid {
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-
-        .info-section,
-        .contact-section {
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-
-        .hero-title h1 {
-          font-size: 2rem;
-        }
-
-        .slide-content {
-          padding: 1.25rem;
-        }
-      }
-
-      /* Responsive para móviles (menos de 768px) */
-      @media (max-width: 768px) {
-        .sidebar {
-          position: fixed;
-          left: -320px;
-          height: 100%;
-          z-index: 1000;
-        }
-
-        .sidebar.open {
-          left: 0;
-        }
-
-        .mobile-header {
-          display: flex;
-        }
-
-        .slide-content {
-          padding: 1rem;
-        }
-
-        .hero-title h1 {
-          font-size: 1.6rem;
-        }
-
-        .secretary-header {
-          flex-direction: column;
-          text-align: center;
-        }
-
-        .stats {
-          grid-template-columns: 1fr;
-        }
-
-        .slide-nav {
-          bottom: 0.75rem;
-          padding: 0.35rem 0.75rem;
-        }
-
-        .nav-btn {
-          width: 38px;
-          height: 38px;
-        }
-
-        .hero-image {
-          aspect-ratio: 4/3;
-          max-height: 300px;
-        }
-
-        .hero-image img {
-          object-fit: cover;
-          object-position: center 25%;
-        }
-      }
-
-      /* Desktop grande (1440px+) */
-      @media (min-width: 1440px) {
-        .slide-content {
-          max-width: 1600px;
-          padding: 2rem 3rem;
-        }
-
-        .hero-title h1 {
-          font-size: 3.5rem;
-        }
-
-        .hero-grid {
-          gap: 3rem;
-        }
-
-        .secretary-description {
-          max-height: 150px;
-        }
-
-        .info-text p {
-          max-height: 250px;
-        }
-      }
-
-      /* Desktop ultra ancho (1920px+) */
-      @media (min-width: 1920px) {
-        .slide-content {
-          max-width: 1800px;
-          padding: 2rem 4rem;
-        }
-
-        .hero-title h1 {
-          font-size: 4rem;
-        }
-
-        .hero-grid {
-          gap: 3.5rem;
-        }
-
-        .stats {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-        }
-      }
-
-      /* Ajustes para las imágenes de los secretarios */
-      .hero-image img[src*="secretario"],
-      .hero-image img[src*="secretaria"],
-      .hero-image img[src*="Fotografia"],
-      .hero-image img[src*="fotografia"],
-      .hero-image img[src*="profile"],
-      .hero-image img[src*="perfil"] {
-        object-position: center 25%;
-      }
-
-      /* Para imágenes con orientación vertical extrema */
-      .hero-image img[src*="crop"],
-      .hero-image img[src*="fill/w_800"] {
-        object-fit: cover;
-        object-position: center 25%;
-      }
-      /* Slide Navigation - CORREGIDO PARA MÓVILES */
-      .slide-nav {
         position: fixed;
         bottom: 1rem;
         left: 50%;
@@ -953,8 +763,84 @@
         background: var(--accent);
       }
 
-      /* Ajustes específicos para móviles */
+      /* Loading */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .info-section,
+        .contact-section {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .hero-title h1 {
+          font-size: 2rem;
+        }
+
+        .slide-content {
+          padding: 1.25rem;
+        }
+      }
+
       @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          left: -320px;
+          height: 100%;
+          z-index: 1000;
+        }
+
+        .sidebar.open {
+          left: 0;
+        }
+
+        .mobile-header {
+          display: flex;
+        }
+
+        .slide-content {
+          padding: 1rem;
+        }
+
+        .hero-title h1 {
+          font-size: 1.6rem;
+        }
+
+        .secretary-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
         .slide-nav {
           bottom: 0.75rem;
           padding: 0.4rem 1rem;
@@ -983,9 +869,29 @@
         .dot.active {
           width: 20px;
         }
+
+        .hero-image {
+          aspect-ratio: 4/3;
+          max-height: 300px;
+        }
+
+        /* Scroll solo en móvil para descripciones largas */
+        .secretary-description {
+          max-height: 180px;
+          overflow-y: auto;
+        }
+
+        .info-text p {
+          max-height: 200px;
+          overflow-y: auto;
+          padding-right: 0.5rem;
+        }
+
+        .slide .slide-content {
+          padding-bottom: 70px;
+        }
       }
 
-      /* Para pantallas muy pequeñas (menos de 480px) */
       @media (max-width: 480px) {
         .slide-nav {
           bottom: 0.5rem;
@@ -1013,14 +919,40 @@
         }
       }
 
-      /* Asegurar que el último slide no tape los botones */
-      .slide:last-child .slide-content {
-        padding-bottom: 80px;
+      /* Desktop grande */
+      @media (min-width: 1440px) {
+        .slide-content {
+          max-width: 1600px;
+          padding: 2rem 3rem;
+        }
+
+        .hero-title h1 {
+          font-size: 3.5rem;
+        }
+
+        .hero-grid {
+          gap: 3rem;
+        }
       }
 
-      @media (max-width: 768px) {
-        .slide .slide-content {
-          padding-bottom: 70px;
+      /* Desktop ultra ancho */
+      @media (min-width: 1920px) {
+        .slide-content {
+          max-width: 1800px;
+          padding: 2rem 4rem;
+        }
+
+        .hero-title h1 {
+          font-size: 4rem;
+        }
+
+        .hero-grid {
+          gap: 3.5rem;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
         }
       }
     </style>
@@ -1177,7 +1109,7 @@
             nombre: "Lic. Rodolfo Esaú Garza de Vega",
             cargo: "Secretario de Desarrollo Económico, Ciencia y Tecnología",
             descripcion:
-              "Licenciado en Comercio Exterior, con experiencia como Consejero Comercial y como Secretario de Desarrollo Económico. Se distingue por su conocimiento en la gestión, coordinación y ejecución de productos y proyectos. Ha impartido conferencias sobre técnicas de negociación aplicables a la cultura japonesa en universidades y foros, presentaciones en seminarios de promoción económica y también ha participado en eventos sobre oportunidades de negocio en sectores estratégicos dirigidos a empresarios. Es promotor de inversión extranjera en México, organiza agendas de negocios y misiones comerciales.",
+              "Licenciado en Comercio Exterior, con experiencia como Consejero Comercial y como Secretario de Desarrollo Económico.\n\nSe distingue por su conocimiento en la gestión, coordinación y ejecución de productos y proyectos.\n\nHa impartido conferencias sobre técnicas de negociación aplicables a la cultura japonesa en universidades y foros, presentaciones en seminarios de promoción económica y también ha participado en eventos sobre oportunidades de negocio en sectores estratégicos dirigidos a empresarios.\n\nEs promotor de inversión extranjera en México, organiza agendas de negocios y misiones comerciales.",
             redes: [
               {
                 plataforma: "Twitter",
@@ -1203,7 +1135,7 @@
           },
           info: {
             descripcion:
-              "Aguascalientes ha surgido como un punto neurálgico para el desarrollo industrial, capitalizando su ubicación ventajosa y una robusta conectividad facilitada por una extensa red de carreteras. Integrado por 11 municipios, el estado ocupa el tercer lugar a nivel nacional en cuanto al acceso a la educación superior. Su panorama cultural es igualmente impresionante, destacando viñedos de renombre, prósperas industrias textiles, vibrantes tradiciones de danza y la gran espectáculo de la Feria de San Marcos, la celebración más grande de toda América Latina.",
+              "Aguascalientes ha surgido como un punto neurálgico para el desarrollo industrial, capitalizando su ubicación ventajosa y una robusta conectividad facilitada por una extensa red de carreteras.\n\nIntegrado por 11 municipios, el estado ocupa el tercer lugar a nivel nacional en cuanto al acceso a la educación superior.\n\nSu panorama cultural es igualmente impresionante, destacando viñedos de renombre, prósperas industrias textiles, vibrantes tradiciones de danza y la gran espectáculo de la Feria de San Marcos, la celebración más grande de toda América Latina.",
             video:
               "https://video.wixstatic.com/video/8d797f_645bfeec06f84e229f154cdf81b03841/1080p/mp4/file.mp4",
             poster:
@@ -4480,8 +4412,9 @@
             data.secretario.nombre;
           document.getElementById("secPosition").textContent =
             data.secretario.cargo;
-          document.getElementById("secDescription").textContent =
-            data.secretario.descripcion;
+          // Para la descripción del secretario (respeta saltos de línea)
+          document.getElementById("secDescription").innerHTML =
+            data.secretario.descripcion.replace(/\n/g, "<br>");
 
           const secSocial = document.getElementById("secSocial");
           secSocial.innerHTML = data.secretario.redes
@@ -4492,8 +4425,9 @@
             )
             .join("");
 
-          document.getElementById("stateDescription").textContent =
-            data.info.descripcion;
+          // Para la descripción del estado (respeta saltos de línea)
+          document.getElementById("stateDescription").innerHTML =
+            data.info.descripcion.replace(/\n/g, "<br>");
 
           const statsContainer = document.getElementById("stateStats");
           statsContainer.innerHTML = data.info.stats
